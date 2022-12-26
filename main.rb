@@ -31,6 +31,7 @@ when "hash-object"
   Dir.mkdir("./gabegit/objects/#{sha1[...2]}")
   # Create a file with the rest of it inside the new folder
   File.write("./gabegit/objects/#{sha1[..2]}/#{sha1[2..]}", compress_content)
+  print sha1
 else
   raise "Unknown command #{command}" # Runtime Error
 end
