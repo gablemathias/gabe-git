@@ -23,14 +23,12 @@ when "cat-file"
   puts file_source
 when "hash-object"
   file = File.open(ARGV[2])
-  # transform the file input into a SHA1 HASH
   content = file.read
-  sha1 = Digest::SHA1.hexdigest content
-  compress_content = Zlib.deflate(content)
-  # Create folder with the first 2 chars of the SHA1 HASH
-  Dir.mkdir("./.gabegit/objects/#{sha1[...2]}")
-  # Create a file with the rest of it inside the new folder
-  File.write("./.gabegit/objects/#{sha1[...2]}/#{sha1[2..]}", compress_content)
+  data = "blob #{content.size}\x00#{content}"
+  sha1 = Digest::SHA1.hexdigest data
+  compress_content = Zlib.deflate(data)
+  Dir.mkdir("./.git/objects/#{sha1[...2]}")
+  File.write("./.git/objects/#{sha1[...2]}/#{sha1[2..]}", compress_content)
   print sha1
 else
   raise "Unknown command #{command}" # Runtime Error
