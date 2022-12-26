@@ -28,9 +28,9 @@ when "hash-object"
   sha1 = Digest::SHA1.hexdigest content
   compress_content = Zlib.deflate(content)
   # Create folder with the first 2 chars of the SHA1 HASH
-  Dir.mkdir("./gabegit/objects/#{sha1[...2]}")
+  Dir.mkdir("./.gabegit/objects/#{sha1[...2]}")
   # Create a file with the rest of it inside the new folder
-  File.write("./gabegit/objects/#{sha1[..2]}/#{sha1[2..]}", compress_content)
+  File.write("./.gabegit/objects/#{sha1[...2]}/#{sha1[2..]}", compress_content)
   print sha1
 else
   raise "Unknown command #{command}" # Runtime Error
