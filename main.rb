@@ -30,6 +30,13 @@ when "hash-object"
   Dir.mkdir("./.git/objects/#{sha1[...2]}")
   File.write("./.git/objects/#{sha1[...2]}/#{sha1[2..]}", compress_content)
   print sha1
+when "ls-tree"
+  sha1 = ARGV[-1]
+  file_path = "./.git/objects/#{sha1[...2]}/#{sha1[2..]}"
+  file_raw_source = File.read(file_path)
+  file_source = Zlib.inflate(file_raw_source).split("\x00")[1..]
+  file_names_tree = file_source.map { |f| f.split[-1] }.join("\n")
+  puts file_names_tree
 else
   raise "Unknown command #{command}" # Runtime Error
 end
