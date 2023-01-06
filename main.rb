@@ -35,7 +35,7 @@ when "hash-object"
   print sha1
 when "ls-tree"
   raw_file = read_object(ARGV[-1])
-  file_source = raw_file.split("\x00")[1..]
+  file_source = raw_file.split("\x00")[1..-2]
   file_names_tree = file_source.map { |f| f.split[-1] }.join("\n")
   puts file_names_tree
 else
