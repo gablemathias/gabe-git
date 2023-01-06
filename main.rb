@@ -12,11 +12,13 @@ def read_object(arg)
 end
 
 def init
-  Dir.mkdir("./.gabegit")
-  Dir.mkdir("./.gabegit/objects")
-  Dir.mkdir("./.gabegit/refs")
-  File.write("./.gabegit/HEAD", "ref: refs/heads/master\n")
-  puts "Initialized myOwnGit directory"
+  unless already_created?
+    Dir.mkdir("./.gabegit")
+    Dir.mkdir("./.gabegit/objects")
+    Dir.mkdir("./.gabegit/refs")
+    File.write("./.gabegit/HEAD", "ref: refs/heads/master\n")
+    puts "Initialized myOwnGit directory"
+  end
 end
 
 def cat_file
@@ -45,6 +47,15 @@ end
 
 def error
   raise "Unknown command #{command}"
+end
+
+def already_created?
+  if Dir.exist?("./.gabegit")
+    puts "repo already created"
+    true
+  else
+    false
+  end
 end
 
 command = ARGV[0]
