@@ -43,6 +43,10 @@ def ls_tree
   puts file_names_tree
 end
 
+def error
+  raise "Unknown command #{command}"
+end
+
 command = ARGV[0]
 
 case command
@@ -55,5 +59,5 @@ when "hash-object"
 when "ls-tree"
   ls_tree
 else
-  raise "Unknown command #{command}" # Runtime Error
+  error # Runtime Error
 end
